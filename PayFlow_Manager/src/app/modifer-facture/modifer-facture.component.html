@@ -1,0 +1,109 @@
+<div class="container mt-4 scrollable-container">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Modifier Facture</h2>
+    <button class="btn btn-secondary" (click)="printFacture()" *ngIf="facture?.idF">
+      <i class="bi bi-printer"></i> Imprimer
+    </button>
+  </div>
+
+  <h6 class="mt-4">Information de Facture</h6>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="form-group mb-3">
+        <label for="client">Client:</label>
+        <select class="form-control" id="client" [(ngModel)]="facture.clientId" name="clientId" required>
+          <option value="">Sélectionner un client</option>
+          <option *ngFor="let client of clients" [value]="client.id">{{client.nom}}</option>
+        </select>
+      </div>
+      
+      <div class="form-group mb-3">
+        <label for="date">Date:</label>
+        <input type="date" class="form-control" id="date" name="date" [(ngModel)]="facture.date" required>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4>Lignes de facture</h4>
+    </div>
+    <div class="card-body">
+      <table class="table" *ngIf="factureLines.length > 0; else noLines">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Description</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of factureLines; let i = index">
+            <td>
+              <select class="form-control" [(ngModel)]="line.produitID" (change)="onProductSelect(i)" name="product{{i}}">
+                <option value="">Sélectionner un produit</option>
+                <option *ngFor="let product of products" [value]="product.id">
+                  {{product.name}}
+                </option>
+              </select>
+            </td>
+            <td>
+              <span>{{ line.description }}</span>
+            </td>
+            <td>
+              <input type="number" class="form-control" [(ngModel)]="line.quantite" 
+                     (change)="calculateLineTotal(i)" min="1" name="quantity{{i}}">
+            </td>
+            <td>
+              <input type="number" class="form-control" [(ngModel)]="line.prixUnitaire"
+                     (change)="calculateLineTotal(i)" min="0" step="0.01" name="price{{i}}">
+            </td>
+            <td>{{line.montantTotal | number:'1.2-2'}} €</td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeLine(i)">
+                <i class="bi bi-trash"></i> Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <button type="button" class="btn btn-secondary" (click)="addLine()">
+                <i class="bi bi-plus-circle"></i> Ajouter une ligne
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      
+      <ng-template #noLines>
+        <div class="alert alert-info">
+          Aucune ligne de facture. Cliquez sur "Ajouter une ligne" pour commencer.
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="addLine()">
+          <i class="bi bi-plus-circle"></i> Ajouter une ligne
+        </button>
+      </ng-template>
+    </div>
+  </div>
+  
+  <h6 class="mt-4">Information de Payment</h6>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5>Total: {{facture.montant | number:'1.2-2'}} €</h5>
+      <h5>Montant payé: {{facture.montantPayer | number:'1.2-2'}} €</h5>
+      <h5>Reste à payer: {{facture.montantRestantAPayer | number:'1.2-2'}} €</h5>
+    </div>
+  </div>
+  
+  <div class="mt-3">
+    <button type="button" class="btn btn-primary" (click)="modifierFacture()">Modifier</button>
+    <button type="button" class="btn btn-secondary ms-2" routerLink="/factures">Annuler</button>
+  </div>
+</div>
+
+

@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>Modifier Règlement</h2>
+  
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form *ngIf="!loading" (ngSubmit)="updateReglement()">
+    <div class="form-group mb-3">
+      <label for="date">Date:</label>
+      <input type="date" class="form-control" id="date" name="date" [(ngModel)]="reglement.dateReglement" required>
+    </div>
+
+    <div class="form-group">
+      <label for="montant">Montant</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="montant" 
+        name="montant" 
+        [(ngModel)]="reglement.montant" 
+        required 
+        min="0"
+        [max]="(facture?.montantTotal - (facture?.montantPaye || 0)) + reglement.montant"
+        step="0.01">
+      <small class="form-text text-muted" *ngIf="facture">
+        Montant maximum autorisé: {{ formatCurrency((facture.montantTotal - (facture.montantPaye || 0)) + reglement.montant) }}
+      </small>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="type">Type de paiement:</label>
+      <select class="form-control" id="type" name="type" [(ngModel)]="reglement.type" required>
+        <option value="ESPECE">Espèce</option>
+        <option value="CHEQUE">Chèque</option>
+        <option value="TRAITE">Traite</option>
+        <option value="VIREMENT">Virement</option>
+      </select>
+    </div>
+
+    <div *ngIf="reglement.type === 'CHEQUE' || reglement.type === 'TRAITE'" class="form-group mb-3">
+      <label for="reference">Numéro de référence:</label>
+      <input type="text" class="form-control" id="reference" name="reference" [(ngModel)]="reglement.referenceNumber" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="navigateToReglementList()">Annuler</button>
+  </form>
+</div>

@@ -1,0 +1,11 @@
+<ng-container *ngIf="authService.isAuthenticated()">
+  <app-navbar></app-navbar>
+</ng-container>
+
+<div class="app-container">
+  <main class="main-content">
+    <div class="container-fluid py-4">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

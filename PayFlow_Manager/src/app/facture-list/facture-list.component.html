@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Liste des Factures</h2>
+    <button class="btn btn-sm btn-outline-primary" (click)="navigateToAddFacture()">
+      <i class="fas fa-file-invoice me-2"></i>Ajouter Facture
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Facture ID</th>
+          <th>Date</th>
+          <th>Client</th>
+          <th>Montant Total</th>
+          <th>Montant Payé</th>
+          <th>Montant Restant</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let facture of factures" [ngClass]="getRowColorClass(facture)">
+          <td>{{ facture.id }}</td>
+          <td>{{ facture.dateFacture | date:'dd/MM/yyyy' }}</td>
+          <td>{{ getClientName(facture.clientID) }}</td>
+          <td>{{ formatCurrency(facture.montantTotal) }}</td>
+          <td>{{ formatCurrency(facture.montantPaye) }}</td>
+          <td>{{ formatCurrency(facture.montantRestant) }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-1" (click)="modifierFacture(facture.id)">
+              <i class="fas fa-edit me-1"></i>Modifier
+            </button>
+            <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteFacture(facture.id)">
+              <i class="fas fa-trash-alt me-1"></i>Supprimer
+            </button>
+            <button class="btn btn-sm btn-outline-info me-1" (click)="voirReglements(facture.id)">
+              <i class="fas fa-money-check-alt me-1"></i>Voir Règlements
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" (click)="printFacture(facture.id)">
+              <i class="fas fa-print me-1"></i>Imprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

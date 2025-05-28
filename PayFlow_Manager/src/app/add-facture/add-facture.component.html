@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <form (ngSubmit)="ajouterFacture()">
+    <h2>Nouvelle Facture</h2>
+    
+    <div class="form-group mb-3">
+      <label for="client">Client:</label>
+      <select class="form-control" id="client" [(ngModel)]="nouvelleFacture.clientId" name="clientId" required>
+        <option value="">Sélectionner un client</option>
+        <option *ngFor="let client of clients" [value]="client.id">{{client.nom}}</option>
+      </select>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header">
+        <h4>Lignes de facture</h4>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Description</th>
+              <th>Quantité</th>
+              <th>Prix unitaire</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of factureLines; let i = index">
+              <td>
+                <select class="form-control" [(ngModel)]="line.produitID" name="product{{i}}" (change)="onProductSelect(i)">
+                  <option value="">Sélectionner un produit</option>
+                  <option *ngFor="let product of products" [value]="product.id">
+                    {{product.name}} 
+                  </option>
+                </select>
+              </td>
+              <td>{{line.description}}</td>
+              <td>
+                <input type="number" 
+                    class="form-control" 
+                    [(ngModel)]="line.quantite" 
+                    name="quantite{{i}}" 
+                    min="1" 
+                    [max]="line.maxQuantite || null"
+                    (change)="validateQuantity(i)"
+                    [title]="'Quantité disponible: ' + line.maxQuantite">
+              </td>
+              <td>{{line.prixUnitaire | number:'1.2-2'}} €</td>
+              <td>{{(line.quantite * line.prixUnitaire) | number:'1.2-2'}} €</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeLine(i)">
+                  <i class="fas fa-trash-alt me-1"></i>Supprimer
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addLine()">
+          <i class="fas fa-plus me-2"></i>Ajouter une ligne
+        </button>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5>Total: {{nouvelleFacture.montant | number:'1.2-2'}} €</h5>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="navigateToFactures()">
+        <i class="fas fa-times me-2"></i>Annuler
+      </button>
+      <button type="submit" class="btn btn-sm btn-outline-primary">
+        <i class="fas fa-save me-2"></i>Enregistrer la facture
+      </button>
+    </div>
+  </form>
+</div>

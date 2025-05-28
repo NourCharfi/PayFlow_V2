@@ -1,0 +1,48 @@
+<!-- reglement-list.component.html -->
+<div class="container mt-4">
+  <h2>Payments {{factureId ? 'for Invoice ' + factureId : ''}}</h2>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{error}}
+  </div>
+
+  <button class="btn btn-sm btn-outline-success mb-2" (click)="navigateToAddReglement()">
+    <i class="fas fa-plus-circle me-2"></i>Add Payment
+  </button>
+  
+  <table class="table table-striped" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>Payment ID</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Reference Number</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reglement of reglements">
+        <td>{{ reglement.id }}</td>
+        <td>{{ reglement.dateReglement }}</td>
+        <td>{{ reglement.montant }}</td>
+        <td>{{ reglement.type }}</td>
+        <td>{{ reglement.referenceNumber }}</td>
+        <td>
+          <button class="btn btn-outline-success me-2" (click)="modifierReglement(reglement.id)">
+            <i class="fas fa-edit me-1"></i>Modifier
+          </button>
+          <button class="btn btn-outline-danger" (click)="supprimerReglement(reglement.id)">
+            <i class="fas fa-trash-alt me-1"></i>Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

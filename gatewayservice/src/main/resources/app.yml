@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: r1
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/produit-service/**
+        - id: r2
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/client-service/**
+        - id: r3
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/facture-service/**
+        - id: r4
+          uri: http://localhost:8085/
+          predicates:
+            - Path=/reglement-service/**
+        - id: r5
+          uri: http://localhost:8087/
+          predicates:
+            - Path=/auth-service/**
+

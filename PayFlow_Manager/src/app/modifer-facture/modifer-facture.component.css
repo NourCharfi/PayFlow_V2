@@ -1,0 +1,9 @@
+.scrollable-container {
+  max-height: 90vh;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+
+.card-body {
+  overflow: visible; /* Ensures content isn't clipped */
+}

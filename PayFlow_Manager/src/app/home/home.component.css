@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    background-size: cover;
+  }
+  
+  .container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .container h1 {
+    color: var(--text-color);
+    padding: 20px;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 2.25rem;
+  }
+  
+  .dashboard .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .dashboard .card-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+  }
+  
+  .dashboard .table-responsive {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .dashboard .progress {
+    height: 30px;
+    border-radius: 5px;
+  }
+  
+  .dashboard .progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .dashboard h2 {
+    margin-bottom: 0;
+    font-weight: bold;
+  }
+  
+  .dashboard .card-title {
+    font-size: 1rem;
+    font-weight: 500;
+  }

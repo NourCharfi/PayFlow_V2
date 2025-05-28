@@ -1,0 +1,23 @@
+<h2>Gestion des utilisateurs</h2>
+
+<form [formGroup]="userForm" (ngSubmit)="addUser()">
+  <label>Nom d'utilisateur :</label>
+  <input formControlName="username" required>
+  <br>
+  <label>Mot de passe :</label>
+  <input type="password" formControlName="password" required>
+  <br>
+  <label>Rôles (séparés par des virgules) :</label>
+  <input formControlName="roles" required placeholder="ADMIN,USER">
+  <br>
+  <button type="submit" [disabled]="userForm.invalid">Ajouter</button>
+</form>
+
+<div *ngIf="message" style="color: green; margin: 10px 0;">{{ message }}</div>
+
+<h3>Liste des utilisateurs</h3>
+<ul>
+  <li *ngFor="let user of users">
+    <strong>{{ user.username }}</strong> - Rôles : {{ user.roles.join(', ') }}
+  </li>
+</ul>

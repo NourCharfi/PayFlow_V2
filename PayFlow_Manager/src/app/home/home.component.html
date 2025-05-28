@@ -1,0 +1,279 @@
+<div class="container-fluid mt-4">
+  <h1 class="mb-4">PayFlow Manager Dashboard</h1>
+  
+  <div class="container mt-4">
+    <h2>Statistiques</h2>
+    
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+  
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+  </div>
+  
+  <div *ngIf="!loading && !error" class="dashboard">
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <div class="card bg-primary text-white">
+          <div class="card-body">
+            <h5 class="card-title">Total Revenue</h5>
+            <h2 class="card-text">{{ formatCurrency(invoiceStatistics?.totalAmount || 0) }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card bg-success text-white">
+          <div class="card-body">
+            <h5 class="card-title">Paid Amount</h5>
+            <h2 class="card-text">{{ formatCurrency(invoiceStatistics?.paidAmount || 0) }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card bg-warning text-dark">
+          <div class="card-body">
+            <h5 class="card-title">Outstanding Amount</h5>
+            <h2 class="card-text">{{ formatCurrency(invoiceStatistics?.outstandingAmount || 0) }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card bg-info text-white">
+          <div class="card-body">
+            <h5 class="card-title">Total Clients</h5>
+            <h2 class="card-text">{{ clientRevenue.length }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Invoice Statistics -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Invoice Statistics</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="d-flex justify-content-between">
+                  <span>Total Invoices:</span>
+                  <strong>{{ invoiceStatistics?.totalInvoices || 0 }}</strong>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <span>Paid Invoices:</span>
+                  <strong class="text-success">{{ invoiceStatistics?.paidInvoices || 0 }}</strong>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <span>Unpaid Invoices:</span>
+                  <strong class="text-danger">{{ invoiceStatistics?.unpaidInvoices || 0 }}</strong>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="progress" style="height: 25px;">
+                  <div class="progress-bar bg-success" 
+                       [style.width.%]="invoiceStatistics?.paidPercentage || 0">
+                    {{ (invoiceStatistics?.paidPercentage || 0).toFixed(1) }}%
+                  </div>
+                </div>
+                <div class="text-center mt-2">
+                  <small>Paid vs Unpaid Invoices</small>
+                </div>
+                <div class="text-center mt-3">
+                  <button class="btn btn-outline-primary" (click)="navigateToInvoiceList()">
+                    View All Invoices
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Most Loyal Clients -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Most Loyal Clients</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Total Revenue</th>
+                    <th>Invoices</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let client of loyalClients">
+                    <td>{{ client.clientName }}</td>
+                    <td>{{ formatCurrency(client.totalRevenue) }}</td>
+                    <td>{{ client.totalInvoices }}</td>
+                  </tr>
+                  <tr *ngIf="loyalClients.length === 0">
+                    <td colspan="3" class="text-center">No client data available</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Client Revenue -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Client Revenue</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Total Revenue</th>
+                    <th>Revenue ({{ currentYear }})</th>
+                    <th>Outstanding</th>
+                    <th>Paid Invoices</th>
+                    <th>Unpaid Invoices</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let client of clientRevenue.slice(0, 10)">
+                    <td>{{ client.clientName }}</td>
+                    <td>{{ formatCurrency(client.totalRevenue) }}</td>
+                    <td>{{ formatCurrency(getYearlyRevenue(client, currentYear)) }}</td>
+                    <td>{{ formatCurrency(client.outstandingAmount) }}</td>
+                    <td>{{ client.paidInvoices }}</td>
+                    <td>{{ client.unpaidInvoices }}</td>
+                  </tr>
+                  <tr *ngIf="clientRevenue.length === 0">
+                    <td colspan="6" class="text-center">No client data available</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Best Selling Products and Out of Stock Products -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Best Selling Products</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Total Quantity</th>
+                    <th>Sales ({{ currentYear }})</th>
+                    <th>Total Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of bestSellingProducts.slice(0, 5)">
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.totalQuantity }}</td>
+                    <td>{{ getYearlySales(product, currentYear) }}</td>
+                    <td>{{ formatCurrency(product.totalRevenue) }}</td>
+                  </tr>
+                  <tr *ngIf="bestSellingProducts.length === 0">
+                    <td colspan="4" class="text-center">No product data available</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Out of Stock Products</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Initial Stock</th>
+                    <th>Sold</th>
+                    <th>Remaining</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of outOfStockProducts">
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.initialQuantity }}</td>
+                    <td>{{ product.soldQuantity }}</td>
+                    <td class="text-danger">{{ product.initialQuantity - product.soldQuantity }}</td>
+                  </tr>
+                  <tr *ngIf="outOfStockProducts.length === 0">
+                    <td colspan="4" class="text-center">No out-of-stock products</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Client Debt List -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header bg-warning">
+            <h5 class="mb-0">Client Debt List</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Client</th>
+                    <th>Email</th>
+                    <th>Outstanding Amount</th>
+                    <th>Unpaid Invoices</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let client of clientDebtList">
+                    <td>{{ client.clientName }}</td>
+                    <td>{{ client.clientEmail }}</td>
+                    <td>{{ formatCurrency(client.outstandingAmount) }}</td>
+                    <td>{{ client.unpaidInvoices }}</td>
+                  </tr>
+                  <tr *ngIf="clientDebtList.length === 0">
+                    <td colspan="4" class="text-center">No client debts</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+

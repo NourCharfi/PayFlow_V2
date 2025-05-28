@@ -1,0 +1,408 @@
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import 'animate.css';
+
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-color: #1f2937;
+    --text-muted: #6b7280;
+    --bg-color: #ffffff;
+    --bg-secondary: #f3f4f6;
+    --border-color: #e5e7eb;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --header-bg: #f8f9fa;
+    --header-text: #1f2937;
+}
+
+[data-bs-theme="dark"] {
+    --text-color: #f3f4f6;
+    --text-muted: #9ca3af;
+    --bg-color: #111827;
+    --bg-secondary: #1f2937;
+    --border-color: #374151;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --header-bg: #1f2937;
+    --header-text: #ffffff;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Navbar specific styles */
+.navbar {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+}
+
+.nav-item.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-item i {
+    font-size: 1.25rem;
+}
+
+.nav-item span {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Theme toggle and connect button styles */
+.theme-toggle,
+.connect-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    color: var(--text-color);
+    background: transparent;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover,
+.connect-button:hover {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+}
+
+.theme-toggle i,
+.connect-button i {
+    font-size: 1.25rem;
+}
+
+.theme-toggle span,
+.connect-button span {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Navbar layout */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+/* Dark mode specific adjustments */
+[data-bs-theme="dark"] .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .theme-toggle,
+[data-bs-theme="dark"] .connect-button {
+    border-color: var(--border-color);
+}
+
+[data-bs-theme="dark"] .theme-toggle:hover,
+[data-bs-theme="dark"] .connect-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.table {
+    --bs-table-bg: var(--bg-secondary);
+    --bs-table-border-color: var(--border-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+/* Smooth transitions for theme changes */
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Modern form controls */
+.form-control {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    background-color: var(--bg-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+/* Better spacing and typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+/* Modern card styles */
+.card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Standardized button styles */
+.btn {
+    font-weight: 500;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    text-transform: capitalize;
+}
+
+.btn i, .btn .fas, .btn .far, .btn .fab {
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+    border-color: var(--text-muted);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+    transform: translateY(-1px);
+}
+
+/* Improved dark mode header visibility */
+[data-bs-theme="dark"] .card-header,
+[data-bs-theme="dark"] .modal-header,
+[data-bs-theme="dark"] th {
+    color: #ffffff;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-bs-theme="dark"] .table th {
+    background-color: var(--bg-secondary);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Better contrast for dashboard cards in dark mode */
+[data-bs-theme="dark"] .card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+[data-bs-theme="dark"] .card-header {
+    background-color: #1f2937;
+    border-bottom-color: #374151;
+}
+
+/* Responsive padding */
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+}
+
+/* Toast Customization */
+.custom-toast {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 15px !important;
+  background-image: none !important;
+}
+
+.success-toast {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+  color: white !important;
+}
+
+.error-toast {
+  background: linear-gradient(135deg, #dc3545 0%, #f86384 100%) !important;
+  color: white !important;
+}
+
+.warning-toast {
+  background: linear-gradient(135deg, #ffc107 0%, #ffb84d 100%) !important;
+  color: #333 !important;
+}
+
+.info-toast {
+  background: linear-gradient(135deg, #17a2b8 0%, #0dcaf0 100%) !important;
+  color: white !important;
+}
+
+.custom-toast-title {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  margin-bottom: 5px !important;
+}
+
+.custom-toast-message {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+/* Toast animation */
+.toast-animation {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Toast progress bar */
+.toast-progress {
+  background: rgba(255, 255, 255, 0.7) !important;
+  height: 4px !important;
+  opacity: 1 !important;
+}
+
+/* Toast close button */
+.toast-close-button {
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  text-shadow: none !important;
+  opacity: 0.8 !important;
+}
+
+.toast-close-button:hover {
+  opacity: 1 !important;
+}
+
+/* Toast Notifications */
+.custom-toast {
+    border-radius: 8px !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+.success-toast {
+    background: #10B981 !important;
+}
+
+.error-toast {
+    background: #EF4444 !important;
+}
+
+.warning-toast {
+    background: #F59E0B !important;
+}
+
+.info-toast {
+    background: #3B82F6 !important;
+}
+
+.toast-progress {
+    height: 4px !important;
+    opacity: 1 !important;
+}
+
+.success-toast .toast-progress {
+    background: #059669 !important;
+}
+
+.error-toast .toast-progress {
+    background: #DC2626 !important;
+}
+
+.warning-toast .toast-progress {
+    background: #D97706 !important;
+}
+
+.info-toast .toast-progress {
+    background: #2563EB !important;
+}
+
+.toast-close-button {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 18px !important;
+    margin-top: -2px !important;
+}
+
+.toast-close-button:hover {
+    color: white !important;
+}

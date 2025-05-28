@@ -1,0 +1,145 @@
+.navbar {
+  background: linear-gradient(to right, #2c3e50, #3498db) !important;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  color: white !important;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  margin: 0 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link i {
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link:hover i {
+  transform: scale(1.1);
+}
+
+.nav-link.active {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-toggler i {
+  color: white;
+}
+
+.form-control {
+  border-radius: 20px;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.btn-outline-primary {
+  color: white;
+  border-color: white;
+  border-radius: 20px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: white;
+  color: #3498db;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+  background: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #2c3e50;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.dropdown-item i {
+  width: 20px;
+  text-align: center;
+}
+
+.dropdown-divider {
+  margin: 0.5rem 0;
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* User icon styling */
+.nav-link i {
+  font-size: 1.1rem;
+}
+
+.nav-link .fa-user-circle {
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Input group improvements */
+.input-group {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-right: 0;
+}
+
+.input-group .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0.5rem 1rem;
+}
+
+/* Add responsiveness */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+  
+  .form-control {
+    margin-bottom: 1rem;
+  }
+}

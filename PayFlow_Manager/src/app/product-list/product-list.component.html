@@ -1,0 +1,46 @@
+<div class="container mt-4">
+  <h2>Liste des Produits</h2>
+  
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>  <button class="btn btn-sm btn-outline-primary mb-3" (click)="addProduct()">
+    <i class="fas fa-plus-circle me-2"></i>Ajouter un Produit
+  </button>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Quantité en Stock</th>
+        <th>Quantité Vendue</th>
+        <th>Quantité Disponible</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</td>
+        <td>{{ product.quantite }}</td>
+        <td>{{ getQuantityVendue(product.id) }}</td>
+        <td>{{ product.quantite - getQuantityVendue(product.id) }}</td>        <td>{{ product.description || 'N/A' }}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary me-2" (click)="editProduct(product.id!)">
+            <i class="fas fa-edit me-1"></i>Modifier
+          </button>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product.id!)">
+            <i class="fas fa-trash-alt me-1"></i>Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
