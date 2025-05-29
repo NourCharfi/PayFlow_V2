@@ -58,9 +58,9 @@ const routes: Routes = [
   { path: 'clients/edit/:id', component: AddClientComponent, canActivate: [AuthGuard] },
   
   // Product routes sécurisées
-  { path: 'products', component: ProductListComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'products/add', component: AddProductComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'products/edit/:id', component: AddProductComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'products', component: ProductListComponent, canActivate: [AuthGuard] },
+  { path: 'products/add', component: AddProductComponent, canActivate: [AuthGuard] },
+  { path: 'products/edit/:id', component: AddProductComponent, canActivate: [AuthGuard] },
   // User management
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] }
 ];
