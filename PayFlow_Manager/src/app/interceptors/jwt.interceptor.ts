@@ -18,7 +18,15 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const user = this.authService.currentUserValue;
-    if (user && user.token) {
+    // Si la requête est pour le refreshToken, injecter le refreshToken
+    if (user && request.url.includes('/refreshToken')) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${user.refreshToken}`
+        }
+      });
+    } else if (user && user.token) {
+      // Pour toutes les autres requêtes, injecter le token d'accès
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${user.token}`

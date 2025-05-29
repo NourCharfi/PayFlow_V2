@@ -24,7 +24,6 @@ import { PrintFactureComponent } from './print-facture/print-facture.component';
 import { NlToBrPipe } from './pipes/nl-to-br.pipe';
 import { NavbarComponent } from './navbar/navbar.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
 
@@ -66,7 +65,6 @@ import { UsersComponent } from './users/users.component';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

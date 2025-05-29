@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-navbar',
     template: `
-        <ng-container *ngIf="authService.currentUserValue">
+        <ng-container *ngIf="authService.isAuthenticated()">
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <div class="d-flex">
