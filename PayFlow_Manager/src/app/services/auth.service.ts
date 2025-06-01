@@ -38,6 +38,18 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  // Fonction utilitaire pour décoder un JWT (sans vérification de signature)
+  private decodeJwt(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+      return JSON.parse(decodeURIComponent(escape(decoded)));
+    } catch (e) {
+      console.error('[AUTH] Erreur lors du décodage du JWT:', e);
+      return null;
+    }
+  }
+
   login(username: string, password: string): Observable<User> {
     const body = new URLSearchParams();
     body.set('username', username);
@@ -46,22 +58,25 @@ export class AuthService {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).pipe(
       map(response => {
-        console.log('[AUTH] Access token reçu:', response.access_token);
-        console.log('[AUTH] Refresh token reçu:', response.refresh_token);
+     
+        let roles = response.roles;
+        if (!roles) {
+          // Décodage du JWT pour extraire les rôles si non présents dans la réponse
+          const decoded = this.decodeJwt(response.access_token);
+          // Selon le backend, le claim peut être 'roles' ou 'authorities'
+          roles = decoded?.roles || decoded?.authorities || [];
+        }
         const user: User = {
           username: username,
-          roles: response.roles,
+          roles: roles,
           token: response.access_token,
           refreshToken: response.refresh_token,
           expiresIn: response.expires_in,
         };
         // Log pour vérification stockage
-        console.log('[AUTH] Objet user AVANT stockage:', user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         // Vérification immédiate après stockage
         const stored = localStorage.getItem('currentUser');
-        console.log('[AUTH] Valeur BRUTE dans localStorage:', stored);
-        console.log('[AUTH] user et localStorage sont identiques ?', JSON.stringify(user) === stored);
         this.currentUserSubject.next(user);
         this.startRefreshTokenTimer(user);
         return user;
@@ -89,13 +104,18 @@ export class AuthService {
           user.token = response.access_token;
           user.refreshToken = response.refresh_token;
           user.expiresIn = response.expires_in;
-      
+          // Extraction des rôles si absents de la réponse
+          let roles = response.roles;
+          if (!roles) {
+            const decoded = this.decodeJwt(response.access_token);
+            roles = decoded?.roles || decoded?.authorities || [];
+          }
+          user.roles = roles;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           this.startRefreshTokenTimer(user);
           return user;
         }
-        
         return null;
       }),
       catchError(() => {

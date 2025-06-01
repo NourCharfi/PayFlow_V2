@@ -14,6 +14,8 @@ import org.ms.authentificationservice.dto.UserRoleData;
 import org.ms.authentificationservice.entities.AppRole;
 import org.ms.authentificationservice.entities.AppUser;
 import org.ms.authentificationservice.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,19 +32,19 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserServiceREST {
     private final UserService userService;
-
+    @Autowired
     public UserServiceREST(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    // @PostAuthorize("hasAuthority('USER')")
+    @PostAuthorize("hasRole('ADMIN')")
     public List<AppUser> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping
-    // @PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('ADMIN')")
     public AppUser addUser(@RequestBody AppUser appUser) {
         return userService.addUser(appUser);
     }
@@ -58,7 +60,7 @@ public class UserServiceREST {
     }
 
     public final String PREFIXE_JWT = "Bearer ";
-    public final String CLE_SIGNATURE = "MaClé";
+    public final String CLE_SIGNATURE = "ThisIsASecretKeyWith32Characters!!";
 
     @GetMapping(path="/refreshToken")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {

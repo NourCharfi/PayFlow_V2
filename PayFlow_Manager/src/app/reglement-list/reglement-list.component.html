@@ -12,7 +12,7 @@
     {{error}}
   </div>
 
-  <button class="btn btn-sm btn-outline-success mb-2" (click)="navigateToAddReglement()">
+  <button class="btn btn-sm btn-outline-success mb-2" (click)="navigateToAddReglement()" >
     <i class="fas fa-plus-circle me-2"></i>Add Payment
   </button>
   
@@ -35,10 +35,10 @@
         <td>{{ reglement.type }}</td>
         <td>{{ reglement.referenceNumber }}</td>
         <td>
-          <button class="btn btn-outline-success me-2" (click)="modifierReglement(reglement.id)">
+          <button class="btn btn-outline-success me-2" (click)="modifierReglement(reglement.id)" >
             <i class="fas fa-edit me-1"></i>Modifier
           </button>
-          <button class="btn btn-outline-danger" (click)="supprimerReglement(reglement.id)">
+          <button class="btn btn-outline-danger" (click)="supprimerReglement(reglement.id)" *ngIf="authService.hasRole('ADMIN')">
             <i class="fas fa-trash-alt me-1"></i>Supprimer
           </button>
         </td>

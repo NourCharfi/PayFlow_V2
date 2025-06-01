@@ -4,6 +4,7 @@ import { FactureService } from '../facture.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { formatCurrency } from '../config/currency.config';
+import { AuthService } from '../services/auth.service';
 
 interface Client {
   id: number;
@@ -50,7 +51,8 @@ export class FactureListComponent implements OnInit {
     private factureService: FactureService,
     private router: Router,
     private route: ActivatedRoute,  // Add this line
-    private http: HttpClient
+    private http: HttpClient,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@ import com.org.reglement_service.feign.FactureServiceClient;
 import com.org.reglement_service.model.Facture;
 import com.org.reglement_service.repository.ReglementRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,14 @@ public class ReglementRestController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Reglement> getAllReglements() {
         logger.info("Fetching all reglements");
         return reglementRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Reglement> getReglementById(@PathVariable Long id) {
         logger.info("Fetching reglement with id: {}", id);
         return reglementRepository.findById(id)
@@ -42,13 +43,14 @@ public class ReglementRestController {
     }
 
     @GetMapping("/facture/{factureId}")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Reglement> getReglementsByFactureId(@PathVariable Long factureId) {
         logger.info("Fetching reglements for facture id: {}", factureId);
         return reglementRepository.findByFactureId(factureId);
     }
 
     @GetMapping("/montant/facture/{factureId}")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Double getMontantPayeByFactureId(@PathVariable Long factureId) {
         logger.info("Calculating total paid amount for facture id: {}", factureId);
         List<Reglement> reglements = reglementRepository.findByFactureId(factureId);
@@ -67,7 +69,7 @@ public class ReglementRestController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Reglement> createReglement(@RequestBody Reglement reglement) {
         logger.info("Creating new reglement: {}", reglement);
         
@@ -106,7 +108,7 @@ public class ReglementRestController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Reglement> updateReglement(@PathVariable Long id, @RequestBody Reglement reglement) {
         logger.info("Updating reglement with id: {}", id);
         
@@ -146,7 +148,7 @@ public class ReglementRestController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteReglement(@PathVariable Long id) {
         logger.info("Deleting reglement with id: {}", id);
         

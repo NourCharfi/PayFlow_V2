@@ -20,7 +20,6 @@ export class JwtInterceptor implements HttpInterceptor {
     const user = this.authService.currentUserValue;
     // Injection du refresh token uniquement pour la route de refresh
     if (user && request.url.includes('/users/refreshToken')) {
-      console.log('[JWT INTERCEPTOR] Refresh token utilisé:', user.refreshToken);
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${user.refreshToken}`

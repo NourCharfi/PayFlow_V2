@@ -10,8 +10,8 @@ import { ToastrService } from 'ngx-toastr';
         <ng-container *ngIf="authService.isAuthenticated()">
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
-                    <div class="d-flex">
-                        <a class="navbar-brand" routerLink="/">
+                    <div class="d-flex" >
+                        <a  class="navbar-brand" routerLink="/">
                             <i class="fas fa-money-bill-wave me-2"></i>
                             PayFlow Manager
                         </a>

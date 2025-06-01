@@ -10,6 +10,7 @@ import org.ms.facture_service.model.Produit;
 import org.ms.facture_service.repository.FactureLigneRepository;
 import org.ms.facture_service.repository.FactureRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class FactureRestController {
     }
     
     @GetMapping(path="/factures")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Facture> getAllFactures() {
         try {
             logger.info("Fetching all factures");
@@ -74,7 +75,7 @@ public class FactureRestController {
     }
     
     @GetMapping(path="/full-facture/{id}")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Facture getFacture(@PathVariable(name = "id") Long id) {
         logger.info("Fetching facture with ID: {}", id);
         Facture facture = factureRepository.findById(id).get();
@@ -105,7 +106,7 @@ public class FactureRestController {
     }
     
     @PostMapping(path="/factures")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Facture createFacture(@RequestBody Facture facture) {
         logger.info("Creating new facture");
         
@@ -185,6 +186,7 @@ public class FactureRestController {
     }
     
     @PutMapping(path="/factures/{id}")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Transactional
     public Facture updateFacture(@PathVariable Long id, @RequestBody Map<String, Object> factureDetails) {
         try {
@@ -313,12 +315,14 @@ public class FactureRestController {
     }
     
     @GetMapping(path="/factures/{id}")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Facture getFactureById(@PathVariable(name = "id") Long id) {
         return factureRepository.findById(id).orElseThrow(() -> 
             new IllegalArgumentException("Facture not found with id: " + id));
     }
     
     @DeleteMapping(path="/factures/{id}")
+    @PostAuthorize("hasRole('ADMIN')")
     @Transactional
     public void deleteFacture(@PathVariable(name = "id") Long id) {
         logger.info("Deleting facture with ID: {}", id);

@@ -19,7 +19,7 @@ import java.util.Collection;
 
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     public final String PREFIXE_JWT = "Bearer ";
-    public final String CLE_SIGNATURE = "MaClé";
+    public final String CLE_SIGNATURE = "ThisIsASecretKeyWith32Characters!!";
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getServletPath().equals("/users/refreshToken")) {

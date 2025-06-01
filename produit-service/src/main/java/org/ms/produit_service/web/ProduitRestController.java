@@ -18,7 +18,7 @@ public class ProduitRestController {
     private ProduitRepository produitRepository;
 
     @GetMapping(path = "/produits")
-    @PostAuthorize("hasRole('USER')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<Produit> list() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
@@ -28,8 +28,8 @@ public class ProduitRestController {
     }
 
     @GetMapping(path = "/produits/{id}")
-    @PostAuthorize("hasRole('USER')")
-    public Produit getOne(@PathVariable Long id) {
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Produit getOne(@PathVariable("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
         System.out.println("[SECURITY] Rôles de l'utilisateur :");
@@ -38,7 +38,7 @@ public class ProduitRestController {
     }
 
     @PostMapping(path = "/produits")
-    @PostAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Produit save(@RequestBody Produit produit) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
@@ -49,7 +49,7 @@ public class ProduitRestController {
 
     @PutMapping(path = "/produits/{id}")
     @PostAuthorize("hasRole('ADMIN')")
-    public Produit update(@PathVariable Long id, @RequestBody Produit produit) {
+    public Produit update(@PathVariable("id") Long id, @RequestBody Produit produit) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
         System.out.println("[SECURITY] Rôles de l'utilisateur :");
@@ -60,7 +60,7 @@ public class ProduitRestController {
 
     @DeleteMapping(path = "/produits/{id}")
     @PostAuthorize("hasRole('ADMIN')")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
         System.out.println("[SECURITY] Rôles de l'utilisateur :");
@@ -71,7 +71,7 @@ public class ProduitRestController {
     // New method to check available quantity
     @GetMapping(path = "/produits/{id}/available")
     @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public long getAvailableQuantity(@PathVariable Long id) {
+    public long getAvailableQuantity(@PathVariable("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
         System.out.println("[SECURITY] Rôles de l'utilisateur :");
@@ -83,8 +83,8 @@ public class ProduitRestController {
 
     // New method to update sold quantity
     @PutMapping(path = "/produits/{id}/updateQuantiteVendue")
-    @PostAuthorize("hasRole('ADMIN')")
-    public Produit updateQuantiteVendue(@PathVariable Long id, @RequestParam long newQuantity) {
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Produit updateQuantiteVendue(@PathVariable("id") Long id, @RequestParam long newQuantity) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
         System.out.println("[SECURITY] Rôles de l'utilisateur :");

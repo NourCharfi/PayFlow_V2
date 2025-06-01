@@ -4,6 +4,7 @@ import { Subscription, forkJoin, of } from 'rxjs';
 import { ReglementService } from '../services/reglement.service';
 import { PaymentType, Reglement } from '../modal/reglement';
 import { FactureService } from '../facture.service';
+import { AuthService } from '../services/auth.service';
 
 interface Facture {
   id: number;
@@ -36,7 +37,8 @@ export class ReglementListComponent implements OnInit, OnDestroy {
     private reglementService: ReglementService,
     private factureService: FactureService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -44,10 +46,8 @@ export class ReglementListComponent implements OnInit, OnDestroy {
       const id = params.get('id');
       if (id) {
         this.factureId = +id;
-        console.log('Loading payments for invoice ID:', this.factureId);
         this.loadReglementsByFacture(this.factureId);
       } else {
-        console.log('Loading all payments');
         this.loadAllReglements();
       }
     });

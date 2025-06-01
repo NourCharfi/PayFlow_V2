@@ -3,6 +3,7 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../modal/product';
 import { Router } from '@angular/router';
 import { StatisticsService } from '../services/statistics.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -18,7 +19,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">PayFlow Manager</a>
+    <a  class="navbar-brand" routerLink="/">PayFlow Manager</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -20,32 +20,32 @@
             <i class="bi bi-house-door-fill me-1"></i>Accueil
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.hasRole('USER') || authService.hasRole('ADMIN')">
           <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
             <i class="bi bi-graph-up me-1"></i>Tableau de bord
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.hasRole('USER') || authService.hasRole('ADMIN')">
           <a class="nav-link" routerLink="/clients" routerLinkActive="active">
             <i class="bi bi-people-fill me-1"></i>Clients
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/products" routerLinkActive="active">
+        <li class="nav-item" *ngIf="authService.hasRole('USER') || authService.hasRole('ADMIN')">
+          <a class="nav-link" routerLink="/produits" routerLinkActive="active">
             <i class="bi bi-box-seam-fill me-1"></i>Produits
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.hasRole('USER') || authService.hasRole('ADMIN')">
           <a class="nav-link" routerLink="/factures" routerLinkActive="active">
             <i class="bi bi-file-earmark-text-fill me-1"></i>Factures
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.hasRole('USER') || authService.hasRole('ADMIN')">
           <a class="nav-link" routerLink="/reglements" routerLinkActive="active">
             <i class="bi bi-cash-stack me-1"></i>Règlements
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="authService.isAdmin()">
           <a class="nav-link" routerLink="/users" routerLinkActive="active">
             <i class="bi bi-person-lines-fill me-1"></i>Utilisateurs
           </a>

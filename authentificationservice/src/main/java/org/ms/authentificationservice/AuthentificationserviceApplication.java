@@ -36,6 +36,7 @@ public class AuthentificationserviceApplication {
 			userService.addRole(roleAdmin);
 
 			userService.addRoleToUser("user1", "USER");
+			userService.addRoleToUser("user2", "USER");
 			userService.addRoleToUser("user2", "ADMIN");
 			
 			 for (AppUser appUser : userService.getAllUsers())

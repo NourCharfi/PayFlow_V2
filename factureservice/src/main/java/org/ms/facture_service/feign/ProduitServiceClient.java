@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="produit-service")
+@FeignClient(name="produit-service", configuration = FeignClientConfig.class)
 public interface ProduitServiceClient {
     @GetMapping(path="/produits")
     List<Produit> getAllProduits();

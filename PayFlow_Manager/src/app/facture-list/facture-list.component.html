@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Liste des Factures</h2>
-    <button class="btn btn-sm btn-outline-primary" (click)="navigateToAddFacture()">
+    <button class="btn btn-sm btn-outline-primary" (click)="navigateToAddFacture()" >
       <i class="fas fa-file-invoice me-2"></i>Ajouter Facture
     </button>
   </div>
@@ -38,10 +38,10 @@
           <td>{{ formatCurrency(facture.montantPaye) }}</td>
           <td>{{ formatCurrency(facture.montantRestant) }}</td>
           <td>
-            <button class="btn btn-sm btn-outline-primary me-1" (click)="modifierFacture(facture.id)">
+            <button class="btn btn-sm btn-outline-primary me-1" (click)="modifierFacture(facture.id)" >
               <i class="fas fa-edit me-1"></i>Modifier
             </button>
-            <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteFacture(facture.id)">
+            <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteFacture(facture.id)" *ngIf="authService.hasRole('ADMIN')">
               <i class="fas fa-trash-alt me-1"></i>Supprimer
             </button>
             <button class="btn btn-sm btn-outline-info me-1" (click)="voirReglements(facture.id)">
