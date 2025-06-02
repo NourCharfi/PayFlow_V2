@@ -162,4 +162,25 @@ export class AuthService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
+
+  // Méthode utilitaire pour afficher le contenu du JWT et vérifier les rôles
+  public debugJwtRoles(): void {
+    const user = this.currentUserValue;
+    if (!user || !user.token) {
+      console.warn('[DEBUG] Aucun utilisateur connecté ou token absent');
+      return;
+    }
+    const decoded = this.decodeJwt(user.token);
+    console.log('[DEBUG] Payload JWT décodé:', decoded);
+    if (decoded?.roles) {
+      console.log('[DEBUG] Rôles présents dans le JWT:', decoded.roles);
+      if (decoded.roles.includes('ADMIN')) {
+        console.log('[DEBUG] Le rôle ADMIN est bien présent dans le JWT');
+      } else {
+        console.warn('[DEBUG] Le rôle ADMIN est ABSENT du JWT');
+      }
+    } else {
+      console.warn('[DEBUG] Aucun claim roles trouvé dans le JWT');
+    }
+  }
 }

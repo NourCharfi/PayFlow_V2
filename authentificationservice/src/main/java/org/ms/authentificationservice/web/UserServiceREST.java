@@ -50,11 +50,13 @@ public class UserServiceREST {
     }
 
     @PostMapping("/roles")
+    @PostAuthorize("hasAuthority('ADMIN')")
     public AppRole addRole(@RequestBody AppRole appRole) {
         return userService.addRole(appRole);
     }
 
     @PostMapping("/addRoleToUser")
+    @PostAuthorize("hasAuthority('ADMIN')")
     public void addRoleToUser(@RequestBody UserRoleData userRoleData) {
         userService.addRoleToUser(userRoleData.getUsername(), userRoleData.getRoleName());
     }

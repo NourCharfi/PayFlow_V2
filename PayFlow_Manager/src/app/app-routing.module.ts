@@ -62,7 +62,7 @@ const routes: Routes = [
   { path: 'products/add', component: AddProductComponent, canActivate: [AuthGuard] },
   { path: 'products/edit/:id', component: AddProductComponent, canActivate: [AuthGuard] },
   // User management
-  { path: 'users', component: UsersComponent, canActivate: [AuthGuard, AdminGuard] }
+  //{ path: 'users', component: UsersComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

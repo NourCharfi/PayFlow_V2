@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ThemeService } from '../services/theme.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-navbar',
@@ -53,12 +52,13 @@ import { ToastrService } from 'ngx-toastr';
                                     Règlements
                                 </a>
                             </li>
-                               <li class="nav-item">
+                    <!--      <li class="nav-item">
                                 <a class="nav-link" routerLink="/users" routerLinkActive="active">
                                     <i class="fas fa-users me-1"></i>
                                     Utilisateurs
                                 </a>
                             </li>
+                    -->   
                         </ul>
                         <div class="d-flex align-items-center ms-auto">
                             <button class="btn btn-link nav-link me-3 theme-btn" (click)="themeService.toggleTheme()">
@@ -167,10 +167,8 @@ export class NavbarComponent {
         public themeService: ThemeService,
         public authService: AuthService,
         private router: Router,
-        private toastr: ToastrService
     ) {
       this.authService.onLogout.subscribe(() => {
-        this.toastr.info('Déconnexion réussie');
         if (this.router.url !== '/login') {
           this.router.navigate(['/login']);
         }

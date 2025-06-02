@@ -18,7 +18,6 @@ export class ClientService {
   getClients(): Observable<Client[]> {
     return this.http.get<Client[]>(this.apiUrl).pipe(
       tap({
-        next: (clients) => this.toastService.success(`Successfully retrieved ${clients.length} clients`),
         error: (error) => this.toastService.error(`Error fetching clients: ${error.message}`)
       })
     );

@@ -17,7 +17,6 @@ export class FactureService {
   getFactures(): Observable<any[]> {
     return this.http.get<any[]>(`${API_BASE_URL}/factures`).pipe(
       tap({
-        next: (factures) => this.toastService.success(`Successfully retrieved ${factures.length} invoices`),
         error: (error) => this.toastService.error(`Error fetching invoices: ${error.message}`)
       })
     );
@@ -28,7 +27,6 @@ export class FactureService {
       tap({
         next: (facture) => {
           const clientName = facture.client?.nom || 'Unknown Client';
-          this.toastService.success(`Successfully retrieved invoice for ${clientName}`);
         },
         error: (error) => this.toastService.error(`Error fetching invoice: ${error.message}`)
       })

@@ -84,7 +84,6 @@ export class ProductService {
         return products.map(p => this.mapToProduct(p));
       }),
       tap({
-        next: (products) => this.toastService.success(`Successfully retrieved ${products.length} products`),
         error: (error) => this.toastService.error(`Error fetching products: ${error.message}`)
       })
     );
@@ -94,7 +93,6 @@ export class ProductService {
     return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
       map(response => this.mapToProduct(response)),
       tap({
-        next: (product) => this.toastService.success(`Successfully retrieved product: ${product.name}`),
         error: (error) => this.toastService.error(`Error fetching product: ${error.message}`)
       })
     );

@@ -52,9 +52,7 @@ import { first } from 'rxjs/operators';
                     {{loading ? 'Connexion...' : 'Se connecter'}}
                   </button>
                 </div>
-                <div class="text-center mt-3">
-                  <a routerLink="/register">Pas de compte ? S'inscrire</a>
-                </div>
+              
               </form>
             </div>
           </div>
@@ -96,13 +94,11 @@ export class LoginComponent {
       .pipe(first())
       .subscribe({
         next: () => {
-          this.toastr.success('Connexion réussie');
           this.router.navigate(['/home']);
         },
         error: error => {
           this.error = error.error?.message || 'Échec de la connexion';
           this.loading = false;
-          this.toastr.error(this.error);
         }
       });
   }

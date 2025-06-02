@@ -20,7 +20,6 @@ export class ReglementService {
     return this.http.get<Reglement[]>(this.apiUrl).pipe(
       tap(
         (reglements) => {
-          this.toastService.success('Payments loaded successfully');
         },
         (error) => {
           this.toastService.error('Failed to load payments: ' + (error.error?.message || error.message));
