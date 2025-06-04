@@ -60,6 +60,7 @@ public class ReglementRestController {
     }
 
     @GetMapping("/total/facture/{factureId}")
+    @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public Double getTotalReglementByFactureId(@PathVariable Long factureId) {
         logger.info("Calculating total reglement for facture id: {}", factureId);
         List<Reglement> reglements = reglementRepository.findByFactureId(factureId);

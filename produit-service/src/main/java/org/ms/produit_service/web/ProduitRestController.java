@@ -84,7 +84,7 @@ public class ProduitRestController {
     // New method to update sold quantity
     @PutMapping(path = "/produits/{id}/updateQuantiteVendue")
     @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public Produit updateQuantiteVendue(@PathVariable("id") Long id, @RequestParam long newQuantity) {
+    public Produit updateQuantiteVendue(@PathVariable("id") Long id, @RequestParam(name = "newQuantity") long newQuantity) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("[SECURITY] Utilisateur connecté : " + authentication.getName());
         System.out.println("[SECURITY] Rôles de l'utilisateur :");

@@ -35,36 +35,4 @@ public class ReglementServiceApplication {
         SpringApplication.run(ReglementServiceApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner start(ReglementRepository reglementRepository,
-                          FactureServiceClient factureServiceClient) {
-        return args -> {
-            try {
-                logger.info("Initializing sample payments...");
-                Long factureId = 1L; // Default fallback ID
-                
-                try {
-                    Facture facture = factureServiceClient.findFactureById(1L);
-                    if (facture != null && facture.getId() != null) {
-                        factureId = facture.getId();
-                    }
-                } catch (Exception e) {
-                    logger.warn("Could not fetch facture, using default ID: {}", e.getMessage());
-                }
-
-                Random random = new Random();
-                for (int i = 0; i < 5; i++) {
-                    Reglement reglement = new Reglement();
-                    reglement.setDateReglement(new Date());
-                    reglement.setMontant(100.0);
-                    reglement.setType(PaymentType.values()[random.nextInt(PaymentType.values().length)]);
-                    reglement.setFactureId(factureId);
-                    reglementRepository.save(reglement);
-                    logger.info("Created payment with ID: {}", reglement.getId());
-                }
-            } catch (Exception e) {
-                logger.error("Error during payment initialization", e);
-            }
-        };
-    }
 }

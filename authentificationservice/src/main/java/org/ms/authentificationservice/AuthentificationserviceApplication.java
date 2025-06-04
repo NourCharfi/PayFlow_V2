@@ -25,8 +25,8 @@ public class AuthentificationserviceApplication {
 	CommandLineRunner start(UserService userService) {
 		return args -> {
 			
-			AppUser user1 = new AppUser(null, "user1", "123", new ArrayList<>());
-			AppUser user2 = new AppUser(null, "user2", "456", new ArrayList<>());
+			AppUser user1 = new AppUser(null, "Nour", "123", new ArrayList<>());
+			AppUser user2 = new AppUser(null, "Nassim", "456", new ArrayList<>());
 			userService.addUser(user1);
 			userService.addUser(user2);
 
@@ -35,9 +35,9 @@ public class AuthentificationserviceApplication {
 			userService.addRole(roleUser);
 			userService.addRole(roleAdmin);
 
-			userService.addRoleToUser("user1", "USER");
-			userService.addRoleToUser("user2", "USER");
-			userService.addRoleToUser("user2", "ADMIN");
+			userService.addRoleToUser("Nour", "USER");
+			userService.addRoleToUser("Nassim", "USER");
+			userService.addRoleToUser("Nassim", "ADMIN");
 			
 			 for (AppUser appUser : userService.getAllUsers())
 				{

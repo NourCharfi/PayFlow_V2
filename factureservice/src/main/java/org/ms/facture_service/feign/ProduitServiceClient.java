@@ -20,5 +20,5 @@ public interface ProduitServiceClient {
     long getAvailableQuantity(@PathVariable(name="id") Long id);
 
     @PutMapping(path="/produits/{id}/updateQuantiteVendue")
-    Produit updateQuantiteVendue(@PathVariable(name="id") Long id, @RequestParam long newQuantity);
+    Produit updateQuantiteVendue(@PathVariable(name="id") Long id, @RequestParam(name="newQuantity") long newQuantity);
 }
